@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Happstack.Server (Conf(port), nullConf, simpleHTTP, toResponse, ok)
 
 main :: IO ()
-main = someFunc
+main = simpleHTTP nullConf{port=9000} $ ok (toResponse "Hello, World!")
