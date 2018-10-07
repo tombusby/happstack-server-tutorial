@@ -2,7 +2,18 @@ module Main where
 
 import Control.Monad
 import Data.Char (toLower)
-import Happstack.Server (Conf(port), FromReqURI(..), nullConf, simpleHTTP, ok, dir, dirs, path)
+import Happstack.Server (
+        Conf(port),
+        FromReqURI(..),
+        Method(GET, POST),
+        nullConf,
+        simpleHTTP,
+        ok,
+        dir,
+        dirs,
+        method,
+        path
+    )
 
 data Subject = World | Haskell
 
@@ -27,5 +38,11 @@ main = do
             dir "goodbye"  $ ok "Goodbye, World!",
             dirs "something/else" $ ok "Uses dirs function",
             dir "matchrest" $ path $ \s -> ok $ "Hello, " ++ s, -- path matches up to next /
-            dir "fromrequri_instance" $ path $ \subject -> ok $ (sayHello subject)
+            dir "fromrequri_instance" $ path $ \subject -> ok $ (sayHello subject),
+            do
+                method GET
+                ok $ "You did a GET request.\n",
+            do
+                method POST
+                ok $ "You did a POST request.\n"
         ]
