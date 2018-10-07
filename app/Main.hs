@@ -1,7 +1,7 @@
 module Main where
 
 import Control.Monad
-import Happstack.Server (Conf(port), nullConf, simpleHTTP, ok, dir, dirs)
+import Happstack.Server (Conf(port), nullConf, simpleHTTP, ok, dir, dirs, path)
 
 main :: IO ()
 main = do
@@ -11,5 +11,6 @@ main = do
             dir "hello" $ dir "moon" $ ok "Hello, Moon!", -- Will never be called since above succeeds
             dir "goodbye" $ dir "moon" $ ok "Goodbye, Moon!",
             dir "goodbye"  $ ok "Goodbye, World!",
-            dirs "something/else" $ ok "Uses dirs function"
+            dirs "something/else" $ ok "Uses dirs function",
+            dir "matchrest" $ path $ \s -> ok $ "Hello, " ++ s -- path matches up to next /
         ]
