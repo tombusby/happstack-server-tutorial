@@ -39,6 +39,9 @@ main = do
             dirs "something/else" $ ok "Uses dirs function",
             dir "matchrest" $ path $ \s -> ok $ "Hello, " ++ s, -- path matches up to next /
             dir "fromrequri_instance" $ path $ \subject -> ok $ (sayHello subject),
+            dir "foo" $ do
+                method GET
+                ok $ "You did a GET request on a path starting with /foo.\n",
             do
                 method GET
                 ok $ "You did a GET request.\n",
